@@ -11,7 +11,7 @@ Ce projet consiste en la conception et le déploiement d'une infrastructure rés
 * **Sécurité & Gestion** : Configuration d'un VLAN d'administration dédié (VLAN 60) et d'un VLAN natif (VLAN 50).
 
 ## 📊 Topologie Réseau
-![Topologie du réseau](image/Capture d'écran 2026-01-07 034804.png)
+![Topologie du réseau](./image/Capture d'écran 2026-01-07 034804.png)
 *Légende : La topologie montre l'interconnexion entre le routeur R1, les switches S1/S2 liés en EtherChannel, et les postes clients.*
 
 ## 📋 Plan d'Adressage (VLSM)
