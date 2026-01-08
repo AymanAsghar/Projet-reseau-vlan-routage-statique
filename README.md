@@ -1,90 +1,110 @@
-# Projet-réseau-VLAN-routage-statique
+# 🌐 Projet Réseau Segmenté avec VLANs et Routage Statique
 
-> **Projet Technique :** Conception et déploiement d'une infrastructure Cisco complète avec segmentation VLAN, EtherChannel et routage statique WAN.
+## 📌 Description
+Ce projet consiste à concevoir et implémenter une infrastructure réseau **segmentée par VLANs**, avec **routage inter-VLAN**, **EtherChannel**, et **routage statique WAN**, en utilisant **Cisco Packet Tracer**.
 
-![Cisco](https://img.shields.io/badge/Cisco-Packet_Tracer-049fd9?style=for-the-badge&logo=cisco)
-![Status](https://img.shields.io/badge/Status-OPÉRATIONNEL-success?style=for-the-badge)
-![Year](https://img.shields.io/badge/Année-2025%2F2026-blueviolet?style=for-the-badge)
-![VLAN](https://img.shields.io/badge/VLAN-802.1Q-important?style=for-the-badge)
-![Routage](https://img.shields.io/badge/Routage-Statique-informational?style=for-the-badge)
-
-## 📌 Présentation du Projet
-Ce projet académique consiste en la conception et mise en œuvre d'une infrastructure réseau multisites segmentée avec VLANs, EtherChannel, Router-on-a-Stick et routage statique WAN. L'objectif est de démontrer la maîtrise des technologies de commutation avancée et de routage pour assurer la disponibilité, la sécurité et la performance des données dans un environnement d'entreprise simulé.
-
-**Étudiant :** Ayman Asghar  
-**Encadrant :** Pr. KH.IAT  
+Il a été réalisé dans le cadre du module **Réseaux Informatiques** à l’**Université Mundiapolis** (1ère année Génie Informatique).
 
 ---
 
-## 🏗️ Topologie & Matériel
-L'infrastructure utilise une approche modulaire hiérarchique pour séparer les services (administration, utilisateurs, serveurs) et optimiser les performances réseau.
-
-### Inventaire des Équipements
-| Matériel | Quantité | Rôle Stratégique |
-| :--- | :---: | :--- |
-| **Routeur Cisco** | 3+ | Routage inter-VLAN et interconnexion WAN |
-| **Switch Cisco 2960** | 2+ | Commutation d'accès avec segmentation VLAN |
-| **PC Clients/Serveurs** | Plusieurs | Postes utilisateurs et services segmentés |
-
-> [!NOTE]
-> La topologie complète intègre une zone LAN principale segmentée en VLANs et une connexion WAN vers des sites distants via des liaisons séries.
+## 🎯 Objectifs du projet
+- Mettre en œuvre une **segmentation logique** du réseau à l’aide des VLANs  
+- Configurer le **routage inter-VLAN (Router-on-a-Stick)**  
+- Assurer la **redondance et l’agrégation de liens** avec EtherChannel (LACP)  
+- Interconnecter plusieurs sites via un **WAN avec routage statique**  
+- Tester et valider la **connectivité de bout en bout**  
+- Appliquer les **bonnes pratiques réseau** (VLAN de gestion, VLAN natif sécurisé)
 
 ---
 
-## 🛠️ Schéma d'Adressage IP
-Une planification rigoureuse a été appliquée pour garantir une allocation IP cohérente, éviter les conflits et faciliter l'administration et l'évolutivité du réseau.
+## 🏗️ Architecture du réseau
 
-| Périphérique | Interface / VLAN | Adresse IP / Masque | Description |
-| :--- | :--- | :--- | :--- |
-| **Routeur Principal** | Fa0/0.10 | 172.18.10.1 /28 | Passerelle VLAN 10 (Administration) |
-| **Routeur Principal** | Fa0/0.20 | 172.18.20.1 /28 | Passerelle VLAN 20 (Utilisateurs) |
-| **Routeur Principal** | S0/0/0 | 10.0.30.1 /30 | Lien WAN vers Site B |
-| **Switch de Gestion** | VLAN 60 | 172.18.60.2 /28 | IP de Management du Switch |
-| **Routeur Site B** | Loopback0 | 10.0.30.129 /32 | Interface de Test Distant |
+### 🔹 Site principal
+- 2 switches de couche 2 (S1 & S2)
+- 1 routeur central (R1)
+- EtherChannel entre S1 et S2
+- Routage inter-VLAN via Router-on-a-Stick
 
----
-
-## 🚀 Fonctionnalités Déployées
-
-### 1. Commutation Avancée (Switching)
-- **Segmentation VLAN (IEEE 802.1Q) :** Création de plusieurs domaines de diffusion logiques pour isoler les services (ex: VLAN 10, 20, 30, 50, 60).
-- **EtherChannel (LACP/PAGP) :** Agrégation de liens entre switches pour augmenter la bande passante, assurer la redondance et optimiser l'utilisation des ressources.
-- **Trunking :** Configuration de ports trunk pour le transport efficace de multiples VLANs entre équipements.
-- **Sécurité des Ports :** Mise en place de politiques de sécurité de base sur les ports d'accès.
-
-### 2. Routage et Connectivité (Routing)
-- **Router-on-a-Stick :** Configuration des sous-interfaces sur le routeur principal pour permettre la communication inter-VLANs.
-- **Interconnexion WAN :** Établissement de liaisons point-à-point série entre sites avec encapsulation HDLC ou PPP.
-- **Routage Statique :** Configuration manuelle et optimisée des tables de routage pour une convergence réseau prévisible et contrôlée entre les différents sites et réseaux.
-- **Connectivité Internet (Optionnel) :** Configuration de la NAT/PAT pour l'accès sortant.
+### 🔹 Sites distants
+- Routeur R2 et R3
+- Liaisons WAN série point à point
+- Routage statique
 
 ---
 
-## 🔍 Validation du Fonctionnement (Tests)
+## 🧩 VLANs configurés
 
-### Test de Connectivité Inter-VLAN
-Le test suivant vérifie que les hôtes de différents VLANs peuvent communiquer via le routeur (Router-on-a-Stick).
+| VLAN | Nom           | Réseau           | Passerelle |
+|-----:|---------------|------------------|------------|
+| 10   | IT            | 172.18.10.0/24   | 172.18.10.1 |
+| 20   | Ventes        | 172.18.20.0/24   | 172.18.20.1 |
+| 30   | Ingénierie    | 172.18.30.0/24   | 172.18.30.1 |
+| 50   | Natif         | 172.18.50.0/24   | 172.18.50.1 |
+| 60   | Gestion       | 172.18.60.0/24   | 172.18.60.1 |
 
-```bash
-C:\> ping 172.18.20.10
-Reply from 172.18.20.10: bytes=32 time<1ms TTL=128
-Reply from 172.18.20.10: bytes=32 time<1ms TTL=128
-Ping statistics successful.
-C:\> tracert 10.0.30.129
-Tracing route to 10.0.30.129 over a maximum of 30 hops:
-  1    0 ms    0 ms    0 ms    172.18.10.1
-  2    10 ms   9 ms    10 ms   10.0.30.1
-  3    12 ms   11 ms   12 ms   10.0.30.129
-Trace complete.
-Switch# show etherchannel summary
-Flags:  D - down        P - bundled in port-channel
-        I - stand-alone s - suspended
-        H - Hot-standby (LACP only)
-        u - unsuitable for bundling
-        U - in use        f - failed to allocate aggregator
-        d - default port
-Number of channel-groups in use: 1
-Number of aggregators:           1
-Group  Port-channel  Protocol    Ports
-------+-------------+-----------+-----------------------------------------------
-1      Po1(SU)         LACP        Fa0/23(P)   Fa0/24(P)
+---
+
+## 🌍 Adressage WAN
+
+| Liaison     | Réseau          | R1             | Routeur distant |
+|------------|-----------------|----------------|-----------------|
+| R1 ↔ R2    | 10.0.30.176/30  | 10.0.30.178    | 10.0.30.177 |
+| R1 ↔ R3    | 10.0.30.184/30  | 10.0.30.185    | 10.0.30.186 |
+
+---
+
+## ⚙️ Technologies utilisées
+- Cisco Packet Tracer  
+- VLANs & Trunking 802.1Q  
+- Router-on-a-Stick  
+- EtherChannel (LACP)  
+- Routage statique  
+- ICMP (ping, traceroute)
+
+---
+
+## 🧪 Tests effectués
+- ✅ Communication inter-VLAN  
+- ✅ Connectivité WAN entre sites  
+- ✅ Connectivité bidirectionnelle  
+- ✅ Accès au VLAN de gestion  
+- ✅ Vérification des tables de routage  
+
+---
+
+## 🚧 Difficultés rencontrées
+- Problème de **VLAN natif non cohérent**
+- Interfaces en **shutdown administratif**
+- Erreur de **next-hop dans une route statique**
+- Délais ARP spécifiques à Packet Tracer
+
+➡️ Tous les problèmes ont été identifiés et corrigés méthodiquement.
+
+---
+
+## 📁 Contenu du dépôt
+
+---
+
+## 📚 Améliorations possibles
+- Implémentation de **OSPF**
+- Mise en place de **ACLs**
+- Redondance de couche 3 (HSRP)
+- Support **IPv6**
+- Qualité de Service (QoS)
+
+---
+
+## 👤 Auteur
+**Ayman Asghar**  
+Étudiant – 1ère année Génie Informatique  
+Université Mundiapolis  
+Année universitaire : 2025 / 2026  
+
+---
+
+## 📎 Références
+- Cisco Networking Academy  
+- Documentation Cisco IOS  
+- Support de cours – Réseaux Informatiques
+
