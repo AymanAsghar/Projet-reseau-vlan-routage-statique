@@ -20,7 +20,7 @@ L'infrastructure utilise une approche modulaire pour séparer les services et op
 ## 🏗️ Topologie du Réseau
 ![Topologie du réseau]
 <p align="center">
-  <img src="./screenshots/topology.png" width="850" alt="Topologie du réseau Ayman">
+  <img src="./image/topology.png" width="850" alt="Topologie du réseau Ayman">
 </p>
 
 
