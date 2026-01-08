@@ -1,40 +1,70 @@
-# 🌐 Infrastructure Réseau Multisite Segmentée (Cisco)
+# 🌐 Design & Connectivité WAN : Infrastructure Multisite Segmentée
 
-## 📝 Présentation du Projet
-Ce projet consiste en la conception et le déploiement d'une infrastructure réseau d'entreprise complète et sécurisée, réalisée sur **Cisco Packet Tracer**. L'architecture répond aux besoins modernes de segmentation, de redondance et d'interconnexion distante (WAN).
+> **Projet Technique :** Conception et déploiement d'une infrastructure Cisco complète avec segmentation VLAN et routage statique.
 
-## 🚀 Fonctionnalités Techniques
-* **Segmentation de Couche 2** : Mise en œuvre de VLANs pour isoler les flux (Compta, RH, Vente, Admin, Natif).
-* **Haute Disponibilité** : Configuration d'un **EtherChannel (LACP)** entre les switches pour l'agrégation de liens et la tolérance aux pannes.
-* **Routage Inter-VLAN** : Architecture **Router-on-a-Stick** configurée sur le routeur central (R1) via des sous-interfaces 802.1Q.
-* **Interconnexion WAN** : Mise en place de **routage statique** pour lier le siège aux sites distants.
-* **Sécurité & Gestion** : Configuration d'un VLAN d'administration dédié (VLAN 60) et d'un VLAN natif (VLAN 50).
+![Cisco](https://img.shields.io/badge/Cisco-Packet_Tracer-049fd9?style=for-the-badge&logo=cisco)
+![Status](https://img.shields.io/badge/Status-Opérationnel-success?style=for-the-badge)
+![Year](https://img.shields.io/badge/Année-2025%2F2026-blueviolet?style=for-the-badge)
 
-## 📊 Topologie Réseau
-![Topologie du réseau](./image/Capture d'écran 2026-01-07 034804.png)
-*Légende : La topologie montre l'interconnexion entre le routeur R1, les switches S1/S2 liés en EtherChannel, et les postes clients.*
+## 📌 Présentation du Projet
+Ce projet consiste en la création d'un réseau d'entreprise interconnectant un siège social à des entités distantes. L'objectif est de démontrer la maîtrise des technologies de commutation avancée et de routage hybride pour assurer la haute disponibilité et la sécurité des données.
 
-## 📋 Plan d'Adressage (VLSM)
-| Réseau / VLAN | Nom | Plage IP | Masque | Passerelle |
-| :--- | :--- | :--- | :--- | :--- |
-| **VLAN 10** | DATA_1 | 172.18.10.0/28 | .240 | 172.18.10.14 |
-| **VLAN 20** | DATA_2 | 172.18.20.0/28 | .240 | 172.18.20.14 |
-| **VLAN 30** | DATA_3 | 172.18.30.0/28 | .240 | 172.18.30.14 |
-| **VLAN 60** | ADMIN | 172.18.60.0/28 | .240 | 172.18.60.14 |
-| **Lien WAN** | R1-R3 | 10.0.30.176/30 | .252 | - |
-
-## 🧪 Validation & Tests
-Les tests suivants ont été validés avec succès (voir captures dans `/screenshots`) :
-* **Connectivité Inter-VLAN** : Ping réussi entre PC1 (VLAN 10) et PC2 (VLAN 20).
-* **Routage WAN** : `tracert` confirmant le passage par R1 vers les réseaux distants.
-* **Vérification des Routes** : Analyse de la table de routage via `show ip route`.
-
-## 📂 Structure du Dépôt
-* `/topology` : Fichier `.pkt` (Cisco Packet Tracer).
-* `/docs` : Rapport technique détaillé et guide de déploiement.
-* `/screenshots` : Preuves de tests et schémas.
+**Étudiant :** Ayman Asghar  
+**Encadrant :** Pr. Azeddine Khiat  
+**Établissement :** Université Mundiapolis
 
 ---
-**Auteur :** Ayman Asghar  
-**Encadrant :** Prof. Azeddine KHIAT  
-**Année :** 2025/2026 - Université Mundiapolis
+
+## 🏗️ Topologie & Matériel
+L'infrastructure utilise une approche modulaire pour séparer les services et optimiser les performances.
+
+![Topologie du réseau](./screenshots/topology.png)
+
+### Inventaire des Équipements
+| Matériel | Quantité | Rôle Stratégique |
+| :--- | :---: | :--- |
+| **Routeur Cisco 2811** | 3 | Gestion du cœur de réseau et passerelles WAN. |
+| **Switch Cisco 2960** | 2 | Commutation d'accès et distribution (LAN). |
+| **PC Clients** | Plusieurs | Postes utilisateurs segmentés par département. |
+
+> [!NOTE]
+> La topologie inclut une zone LAN complexe pour le siège et une simulation d'accès distant via des liaisons séries (DCE/DTE).
+
+---
+
+## 🛠️ Schéma d'Adressage IP (VLSM)
+Une planification rigoureuse a été appliquée pour éviter les conflits et faciliter l'évolutivité.
+
+| Périphérique | Interface | Adresse IP / Masque | Description |
+| :--- | :--- | :--- | :--- |
+| **R1** | Fa0/0.10 | 172.18.10.14 /28 | Passerelle VLAN 10 (Compta) |
+| **R1** | Fa0/0.60 | 172.18.60.14 /28 | Passerelle VLAN 60 (Admin) |
+| **R1** | S0/3/0 | 10.0.30.177 /30 | Lien WAN vers R2 |
+| **S2** | Vlan 60 | 172.18.60.2 /28 | IP de Management Switch |
+
+---
+
+## 🚀 Fonctionnalités Déployées
+
+### 1. Commutation de Couche 2 (Switching)
+* **Segmentation VLAN** : Division du réseau en 5 domaines de diffusion (10, 20, 30, 50, 60).
+* **EtherChannel (LACP)** : Agrégation de liens entre S1 et S2 pour doubler la bande passante et assurer la redondance.
+* **IEEE 802.1Q** : Mise en œuvre de Trunks pour le transport multi-VLAN entre les équipements.
+
+### 2. Solutions de Routage (Routing)
+* **Router-on-a-Stick** : Communication inter-VLAN via les sous-interfaces du routeur R1.
+* **Routage Statique** : Configuration de routes manuelles pour une précision maximale du trafic WAN.
+* **Liaisons Séries** : Interconnexion des sites distants avec gestion de la fréquence d'horloge (Clock Rate).
+
+---
+
+## 🔍 Validation du Fonctionnement (Tests)
+
+### Test de Connectivité WAN (Traceroute)
+Le test `tracert` confirme que le trafic transite avec succès du siège vers le site distant en passant par les interfaces de routage.
+
+```text
+C:\> tracert 10.0.30.129
+1    3 ms     0 ms     0 ms     172.18.10.14  (Passerelle R1)
+2    0 ms     1 ms     0 ms     10.0.30.129   (Cible Distante)
+Trace complete.
