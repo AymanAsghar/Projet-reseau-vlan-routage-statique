@@ -17,8 +17,12 @@ Ce projet consiste en la création d'un réseau d'entreprise interconnectant un 
 
 ## 🏗️ Topologie & Matériel
 L'infrastructure utilise une approche modulaire pour séparer les services et optimiser les performances.
+## 🏗️ Topologie du Réseau
+![Topologie du réseau]
+<p align="center">
+  <img src="./screenshots/topology.png" width="850" alt="Topologie du réseau Ayman">
+</p>
 
-![Topologie du réseau](./screenshots/topology.png)
 
 ### Inventaire des Équipements
 | Matériel | Quantité | Rôle Stratégique |
